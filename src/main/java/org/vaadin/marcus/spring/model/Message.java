@@ -64,4 +64,15 @@ public class Message {
   public void setUnread(boolean unread) {
     this.unread = unread;
   }
+
+  @Override
+  public String toString() {
+    return "Message{" +
+            "id=" + id +
+            ", time=" + time +
+            ", fromV='" + fromV + '\'' +
+            ", messageV='" + messageV + '\'' +
+            ", unread=" + unread +
+            '}';
+  }
 }

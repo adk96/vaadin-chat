@@ -1,20 +1,22 @@
 package org.vaadin.marcus.spring.service.impl;
 
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.vaadin.marcus.spring.model.Message;
+import org.vaadin.marcus.spring.model.MessageStatus;
 import org.vaadin.marcus.spring.repository.MessageRepository;
 import org.vaadin.marcus.spring.service.MessageService;
 
 import javax.transaction.Transactional;
-import java.util.Collections;
-import java.util.Comparator;
+import java.util.*;
 import java.sql.Timestamp;
-import java.util.Date;
 
-import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,6 +25,9 @@ public class MessageServiceImpl implements MessageService {
     private final MessageRepository repository;
     private final PageRequest lastRequest;
 
+    private List<Long> chekedMessages = new ArrayList<>();
+
+
     @Autowired
     public MessageServiceImpl(MessageRepository repository) {
         this.repository = repository;
@@ -30,9 +35,16 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public Message add(Message message) {
-        message.setTime(new Timestamp(new Date().getTime()));
-        return repository.saveAndFlush(message);
+    public MessageStatus add(@RequestBody  Message message) {
+        MessageStatus status = null;
+        try {
+            repository.save(message);
+            status.setMessage("Сообщение успешно сохранено");
+        }
+        catch (Exception e) {
+            status.setMessage("Во время сохранения сообщения произошла ошибка - " + e);
+        }
+        return status;
     }
 
     @Override
@@ -50,8 +62,23 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public List<Message> getUnreadMessages() {
-        return repository.findAllByUnread(true);
+    public List<Message> getUnreadById(long id) {
+        return repository.getUnreadById(id);
+    }
+
+    
+
+    @Override
+    public String getUnreadMessages() {
+        List<Message> out = new ArrayList<>();
+        List<Message> unchekedMessages = repository.findAll();
+        for (Message message: unchekedMessages) {
+            if (!chekedMessages.contains(message.getId())) {
+                chekedMessages.add(message.getId());
+                out.add(message);
+            }
+        }
+        return new Gson().toJson(out);
     }
 
     @Override

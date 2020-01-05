@@ -1,0 +1,10 @@
+org\vaadin\marcus\spring\model\Message.class
+org\vaadin\marcus\spring\service\MessageService.class
+org\vaadin\marcus\spring\model\MessageInfo.class
+org\vaadin\marcus\spring\service\RestService$1.class
+org\vaadin\marcus\spring\config\MessageConfigurator.class
+org\vaadin\marcus\spring\service\RestService.class
+org\vaadin\marcus\spring\MainView.class
+org\vaadin\marcus\spring\MessageList.class
+org\vaadin\marcus\spring\Application.class
+org\vaadin\marcus\spring\config\MessagesInfoManager.class

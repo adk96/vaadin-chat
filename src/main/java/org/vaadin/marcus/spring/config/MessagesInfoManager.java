@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 
 public class MessagesInfoManager {
 
+
     private final List<MessageInfo> messagesInfoQueue = new ArrayList<>();
     
     private final Map<Optional<UI>, MessageList> messageListMap = new HashMap<>();
@@ -33,8 +34,7 @@ public class MessagesInfoManager {
 
     private void addMessageInfo(MessageInfo messageInfo) {
         if (!messagesInfoQueue.contains(messageInfo)) {
-            this.messagesInfoQueue
-                    .add(messageInfo);
+            this.messagesInfoQueue.add(messageInfo);
             this.messageListMap.putIfAbsent(messageInfo.getUI(), messageInfo.getMessageList());
         }
     }
