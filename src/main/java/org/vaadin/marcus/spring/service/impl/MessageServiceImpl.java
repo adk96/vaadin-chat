@@ -36,13 +36,17 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public MessageStatus add(@RequestBody  Message message) {
-        MessageStatus status = null;
+        if(message == null) {
+            System.out.println("An empty request to save data came");
+
+        }
+        MessageStatus status = new MessageStatus();
         try {
             repository.save(message);
-            status.setMessage("Сообщение успешно сохранено");
+            status.setMessage("Message Saved");
         }
         catch (Exception e) {
-            status.setMessage("Во время сохранения сообщения произошла ошибка - " + e);
+            status.setMessage("Message not saved");
         }
         return status;
     }
@@ -66,7 +70,7 @@ public class MessageServiceImpl implements MessageService {
         return repository.getUnreadById(id);
     }
 
-    
+
 
     @Override
     public String getUnreadMessages() {
