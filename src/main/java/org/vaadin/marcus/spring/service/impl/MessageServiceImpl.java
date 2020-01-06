@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.vaadin.marcus.spring.model.InputMessage;
 import org.vaadin.marcus.spring.model.Message;
 import org.vaadin.marcus.spring.model.MessageStatus;
 import org.vaadin.marcus.spring.repository.MessageRepository;
@@ -37,16 +38,16 @@ public class MessageServiceImpl implements MessageService {
     @Override
     public MessageStatus add(@RequestBody  Message message) {
         if(message == null) {
-            System.out.println("An empty request to save data came");
+            System.out.println("Пришел пустой запрос на сохранение данных");
 
         }
         MessageStatus status = new MessageStatus();
         try {
             repository.save(message);
-            status.setMessage("Message Saved");
+            status.setMessage("Сообщение успешно сохранено");
         }
         catch (Exception e) {
-            status.setMessage("Message not saved");
+            status.setMessage("Во время сохранения сообщения произошла ошибка");
         }
         return status;
     }
@@ -66,11 +67,11 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public List<Message> getUnreadById(long id) {
-        return repository.getUnreadById(id);
+    public List<Message> getUnreadById(InputMessage message) {
+         return repository.getUnreadById(message.getMessageId());
     }
 
-
+    // Тут реализация метода, который проверяет каждое сообщение с ранее выдаными на уникальность
 
     @Override
     public String getUnreadMessages() {

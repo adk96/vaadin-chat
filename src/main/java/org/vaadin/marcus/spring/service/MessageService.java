@@ -2,6 +2,7 @@ package org.vaadin.marcus.spring.service;
 
 import com.google.gson.Gson;
 import org.springframework.http.ResponseEntity;
+import org.vaadin.marcus.spring.model.InputMessage;
 import org.vaadin.marcus.spring.model.Message;
 import org.vaadin.marcus.spring.model.MessageStatus;
 
@@ -12,7 +13,7 @@ public interface MessageService {
 
     List<Message> getAllMessages();
     List<Message> getLast();
-    List<Message> getUnreadById(long id);
+    List<Message> getUnreadById(InputMessage message);
 
     String getUnreadMessages();
 

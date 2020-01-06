@@ -3,6 +3,7 @@ package org.vaadin.marcus.spring.controller;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.vaadin.marcus.spring.model.InputMessage;
 import org.vaadin.marcus.spring.model.Message;
 import org.vaadin.marcus.spring.model.MessageStatus;
 import org.vaadin.marcus.spring.service.MessageService;
@@ -36,14 +37,13 @@ public class RestController {
 
     @GetMapping("/api/unread")
     public void getUnreadMessages() {
-       
+        // тут мы вызываем сам таймер
         timerTask.run();
     }
 
-    @GetMapping("/api/unread/{id}")
-    @RequestMapping(path = "/api/unread/{id}")
-    public List<Message> getUnreadById(@PathVariable ("id") long id) {
-        return messageService.getUnreadById(id);
+    @GetMapping("/api/unread/byid")
+    public List<Message> getUnreadById(@RequestBody InputMessage message) {
+        return messageService.getUnreadById(message);
     }
 
 //    @PutMapping("/api/update/{id}")

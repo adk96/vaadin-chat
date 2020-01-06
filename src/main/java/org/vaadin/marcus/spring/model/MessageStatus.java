@@ -3,7 +3,7 @@ package org.vaadin.marcus.spring.model;
 
 public class MessageStatus {
 
-    String status;
+    private String status;
 
     public String getMessage() {
         return status;
