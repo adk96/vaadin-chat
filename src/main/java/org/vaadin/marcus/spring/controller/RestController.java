@@ -5,6 +5,7 @@ import org.atmosphere.config.service.Delete;
 import org.atmosphere.config.service.Get;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.vaadin.marcus.spring.controller.model.Response;
 import org.vaadin.marcus.spring.model.InputMessage;
 import org.vaadin.marcus.spring.model.Message;
 import org.vaadin.marcus.spring.model.MessageStatus;
@@ -13,6 +14,7 @@ import org.vaadin.marcus.spring.service.MessageService;
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.TimerTask;
+import org.springframework.http.HttpStatus;
 
 
 @org.springframework.web.bind.annotation.RestController
@@ -55,9 +57,13 @@ public class RestController {
         return messageService.getUnreadById(message);
     }
 
-    @DeleteMapping("/api/delete")
-    public String clearBase() {
+   
+    
+    @PostMapping("/api/delete")
+    @ResponseStatus(HttpStatus.OK)
+    public Response clearBase() {
         messageService.deleteMessages();
-        return "All messages deleted";
+         return new Response("All messages successful delete!");
     }
+    
 }
