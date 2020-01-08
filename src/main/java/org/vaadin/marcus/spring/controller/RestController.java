@@ -1,6 +1,8 @@
 package org.vaadin.marcus.spring.controller;
 
 import com.google.gson.Gson;
+import org.atmosphere.config.service.Delete;
+import org.atmosphere.config.service.Get;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.vaadin.marcus.spring.model.InputMessage;
@@ -25,14 +27,19 @@ public class RestController {
         this.messageService = messageService;
     }
 
+    @GetMapping("/api/getall")
+    public List<Message> getAll () {
+        return messageService.getAllMessages();
+    }
+
     @PostMapping("/api/save")
     public MessageStatus saveMessage(@RequestBody Message chatMessage) {
         return messageService.add(chatMessage);
     }
 
     @GetMapping("/api/last")
-    public String getLasts() {
-        return new Gson().toJson(messageService.getLast());
+    public List<Message> getLasts() {
+        return (messageService.getLast());
     }
 
     @GetMapping("/api/unread")
@@ -41,13 +48,14 @@ public class RestController {
         timerTask.run();
     }
 
-    @GetMapping("/api/unread/byid")
+    @PostMapping("/api/unread/byid")
     public List<Message> getUnreadById(@RequestBody InputMessage message) {
         return messageService.getUnreadById(message);
     }
 
-//    @PutMapping("/api/update/{id}")
-//    public void updateMessage(@PathVariable long id, @RequestBody Message chatMessage) {
-//        messageService.updateMessage(id, chatMessage);
-//    }
+    @DeleteMapping("/api/delete")
+    public String clearBase() {
+        messageService.deleteMessages();
+        return "Все сообщения были удалены";
+    }
 }

@@ -12,6 +12,16 @@ import java.util.List;
 public interface MessageRepository extends JpaRepository<Message, Long> {
     List<Message> findAllByUnread(boolean unread);
 
+    @Query(value = "SELECT * FROM chatMessages", nativeQuery = true)
+    List<Message> getAllfromTable();
+
+
     @Query(value = "SELECT * FROM chatMessages WHERE id > :id", nativeQuery = true)
     List<Message> getUnreadById(@Param("id") long id);
+
+    @Query(value = "SELECT * FROM chatMessages LIMIT 10", nativeQuery = true)
+    List<Message> getLastMessages();
+
+    @Query(value = "DELETE * FROM chatMessages", nativeQuery = true)
+    void clearBase();
 }

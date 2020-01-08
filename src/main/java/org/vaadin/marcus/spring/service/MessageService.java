@@ -9,13 +9,12 @@ import org.vaadin.marcus.spring.model.MessageStatus;
 import java.util.List;
 
 public interface MessageService {
-    MessageStatus add(Message message);
 
     List<Message> getAllMessages();
+    MessageStatus add(Message message);
     List<Message> getLast();
     List<Message> getUnreadById(InputMessage message);
-
     String getUnreadMessages();
-
+    void deleteMessages();
     void updateMessage(long id, Message message);
 }

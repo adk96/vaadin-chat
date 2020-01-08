@@ -22,7 +22,7 @@ public class TimerConfig {
         TimerTask timerTask = new TimerTask() {
             @Override
             public void run() {
-                messageService.getUnreadMessages();
+                messageService.getAllMessages();
             }
 
         };

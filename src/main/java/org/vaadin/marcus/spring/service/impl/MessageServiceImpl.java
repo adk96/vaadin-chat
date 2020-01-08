@@ -53,23 +53,32 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public List<Message> getAllMessages() {
-        return repository.findAll();
+    public List<Message> getLast() {
+        return repository.getLastMessages();
     }
 
     @Override
-    public List<Message> getLast() {
-        List<Message> result = repository.findAll(lastRequest).getContent();
-
-        return result.stream()
-                .sorted(Comparator.comparingLong(Message::getId))
-                .collect(Collectors.toList());
+    public List<Message> getAllMessages() {
+        return repository.getAllfromTable();
     }
+
+//    @Override
+//    public List<Message> getLast() {
+//        List<Message> result = repository.findAll(lastRequest).getContent();
+//
+//        return result.stream()
+//                .sorted(Comparator.comparingLong(Message::getId))
+//                .collect(Collectors.toList());
+//    }
+
+
 
     @Override
     public List<Message> getUnreadById(InputMessage message) {
          return repository.getUnreadById(message.getMessageId());
     }
+
+
 
     // Тут реализация метода, который проверяет каждое сообщение с ранее выдаными на уникальность
 
@@ -84,6 +93,11 @@ public class MessageServiceImpl implements MessageService {
             }
         }
         return new Gson().toJson(out);
+    }
+
+    @Override
+    public void deleteMessages() {
+        repository.clearBase();
     }
 
     @Override
