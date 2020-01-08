@@ -14,10 +14,12 @@ import javax.annotation.Resource;
 import java.util.List;
 import java.util.TimerTask;
 
+
 @org.springframework.web.bind.annotation.RestController
 public class RestController {
 
     @Autowired
+           
     TimerTask timerTask;
 
     @Resource
@@ -44,7 +46,7 @@ public class RestController {
 
     @GetMapping("/api/unread")
     public void getUnreadMessages() {
-        // тут мы вызываем сам таймер
+        
         timerTask.run();
     }
 
@@ -56,6 +58,6 @@ public class RestController {
     @DeleteMapping("/api/delete")
     public String clearBase() {
         messageService.deleteMessages();
-        return "Все сообщения были удалены";
+        return "All messages deleted";
     }
 }
