@@ -21,6 +21,7 @@ import org.vaadin.marcus.spring.model.MessageInfo;
 import org.vaadin.marcus.spring.service.RestService;
 
 import java.util.List;
+import org.springframework.scheduling.annotation.Scheduled;
 
 @StyleSheet("frontend://styles/styles.css")
 @Route
@@ -109,4 +110,10 @@ public class MainView extends VerticalLayout {
         textField.clear();
         textField.focus();
     }
+    
+     @Scheduled(fixedRate = 1000)
+    public void execute() {
+        messageService.getAllMessages();
+    }
+
 }
