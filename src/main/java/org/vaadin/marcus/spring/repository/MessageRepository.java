@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 import org.vaadin.marcus.spring.model.Message;
 
 import java.util.List;
-import org.springframework.data.jpa.repository.Modifying;
 
 @Repository
 public interface MessageRepository extends JpaRepository<Message, Long> {
@@ -22,8 +21,7 @@ public interface MessageRepository extends JpaRepository<Message, Long> {
 
     @Query(value = "SELECT * FROM chatMessages LIMIT 10", nativeQuery = true)
     List<Message> getLastMessages();
-    
-    @Modifying
-    @Query(value = "DELETE FROM chatMessages", nativeQuery = true)
+
+    @Query(value = "DELETE * FROM chatMessages", nativeQuery = true)
     void clearBase();
 }

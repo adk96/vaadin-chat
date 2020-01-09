@@ -13,7 +13,7 @@ import java.util.TimerTask;
 @Configuration
 public class TimerConfig {
 
-
+// Таймер вызывает каждую секунду метод на загрузку сообщений из БД
     @Autowired
     MessageServiceImpl messageService;
 

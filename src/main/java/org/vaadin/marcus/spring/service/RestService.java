@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.vaadin.marcus.spring.model.Message;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -27,6 +28,12 @@ public class RestService {
         String url = String.format("http://localhost:8080/api/update/%d", id);
 
         this.restTemplate.put(url, message);
+    }
+
+    public List<Message> getUnreadMessages() {
+        List<Message> list = new ArrayList<>();
+        String url = "http://localhost:8080/api/save";
+        return (List<Message>) restTemplate.getForEntity(url, Message[].class);
     }
 
     public List<Message> getLast() {

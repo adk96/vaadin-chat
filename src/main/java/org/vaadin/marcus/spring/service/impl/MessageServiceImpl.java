@@ -44,10 +44,10 @@ public class MessageServiceImpl implements MessageService {
         MessageStatus status = new MessageStatus();
         try {
             repository.save(message);
-            status.setMessage("Message saved");
+            status.setMessage("Сообщение успешно сохранено");
         }
         catch (Exception e) {
-            status.setMessage("Message not saved");
+            status.setMessage("Во время сохранения сообщения произошла ошибка");
         }
         return status;
     }
