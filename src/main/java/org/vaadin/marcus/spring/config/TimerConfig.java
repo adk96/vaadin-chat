@@ -8,9 +8,11 @@ import org.vaadin.marcus.spring.service.impl.MessageServiceImpl;
 
 import java.util.Timer;
 import java.util.TimerTask;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 
 @Configuration
+@EnableScheduling
 public class TimerConfig {
 
 // Таймер вызывает каждую секунду метод на загрузку сообщений из БД

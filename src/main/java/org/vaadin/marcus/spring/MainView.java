@@ -21,15 +21,14 @@ import org.vaadin.marcus.spring.model.MessageInfo;
 import org.vaadin.marcus.spring.service.RestService;
 
 import java.util.List;
-import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 
 @StyleSheet("frontend://styles/styles.css")
 @Route
 @PWA(name = "Vaadin MessagesInfoManager", shortName = "Vaadin MessagesInfoManager")
 @Push
-@EnableScheduling
 public class MainView extends VerticalLayout {
+
     private final MessagesInfoManager messagesInfoManager;
     private final RestService restService;
     private String username;
@@ -89,7 +88,7 @@ public class MainView extends VerticalLayout {
 
         layout.add(messageField, sendButton);
         layout.expand(messageField);
-        
+
         messageField.addFocusListener(event -> {
             for (Message message : messagesInfoManager.getMessagesByUI(getUI())) {
                 if (!message.getFrom().equals(username)) {
@@ -112,11 +111,11 @@ public class MainView extends VerticalLayout {
         textField.clear();
         textField.focus();
     }
-    
+
     @Scheduled(fixedDelay = 1000)
-    public void reload(){
-    messageService.getAllMessages();
-}
-    
-    
+    public void reload() {
+        restService.getUnreadMessages();
+        //messageService.getAllMessages();
+    }
+
 }

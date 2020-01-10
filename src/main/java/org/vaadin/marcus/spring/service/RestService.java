@@ -32,7 +32,7 @@ public class RestService {
 
     public List<Message> getUnreadMessages() {
         List<Message> list = new ArrayList<>();
-        String url = "http://localhost:8080/api/save";
+        String url = "http://localhost:8080/api/unread";
         return (List<Message>) restTemplate.getForEntity(url, Message[].class);
     }
 
