@@ -18,7 +18,7 @@ import java.util.TimerTask;
 public class RestController {
 
     @Autowired
-    TimerTask timerTask;
+    
 
     @Resource
     private final MessageService messageService;
@@ -45,7 +45,7 @@ public class RestController {
     @GetMapping("/api/unread")
     public void getUnreadMessages() {
         // тут мы вызываем сам таймер
-        timerTask.run();
+       
     }
     
 
