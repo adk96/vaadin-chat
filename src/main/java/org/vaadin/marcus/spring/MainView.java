@@ -21,12 +21,14 @@ import org.vaadin.marcus.spring.model.MessageInfo;
 import org.vaadin.marcus.spring.service.RestService;
 
 import java.util.List;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 
 @StyleSheet("frontend://styles/styles.css")
 @Route
 @PWA(name = "Vaadin MessagesInfoManager", shortName = "Vaadin MessagesInfoManager")
 @Push
+@EnableScheduling
 public class MainView extends VerticalLayout {
     private final MessagesInfoManager messagesInfoManager;
     private final RestService restService;
@@ -111,9 +113,10 @@ public class MainView extends VerticalLayout {
         textField.focus();
     }
     
-     @Scheduled(fixedRate = 1000)
-    public void execute() {
-        messageService.getAllMessages();
-    }
-
+    @Scheduled(fixedDelay = 1000)
+    public void reload(){
+    messageService.getAllMessages();
+}
+    
+    
 }
