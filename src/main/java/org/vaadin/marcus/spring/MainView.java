@@ -14,6 +14,7 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.PWA;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.vaadin.marcus.spring.config.MessagesInfoManager;
 import org.vaadin.marcus.spring.config.MessageConfigurator;
 import org.vaadin.marcus.spring.model.Message;
@@ -21,12 +22,13 @@ import org.vaadin.marcus.spring.model.MessageInfo;
 import org.vaadin.marcus.spring.service.RestService;
 
 import java.util.List;
-import org.springframework.scheduling.annotation.Scheduled;
 
 @StyleSheet("frontend://styles/styles.css")
 @Route
 @PWA(name = "Vaadin MessagesInfoManager", shortName = "Vaadin MessagesInfoManager")
 @Push
+@StyleSheet("frontend://styles/styles.css")
+
 public class MainView extends VerticalLayout {
 
     private final MessagesInfoManager messagesInfoManager;
@@ -113,9 +115,13 @@ public class MainView extends VerticalLayout {
     }
 
     @Scheduled(fixedDelay = 1000)
-    public void reload() {
-        restService.getUnreadMessages();
-        //messageService.getAllMessages();
+    public void loadUnReadMessage(){
+        if(messageList == null) return;
+        List<Message> messages = restService.getUnRead();
+        for(Message message : messages){
+            messagesInfoManager.updateMessageUIInfo( new MessageInfo( messageList, message, this ) );
+            message.setUnread( true );
+            restService.saveMessage( message );
+        }
     }
-
 }

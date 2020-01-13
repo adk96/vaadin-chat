@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.vaadin.marcus.spring.model.Message;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -24,16 +23,17 @@ public class RestService {
         return this.restTemplate.postForObject(url, message, Message.class);
     }
 
-
-
-    public List<Message> getUnreadMessages() {
-        List<Message> list = new ArrayList<>();
-        String url = "http://localhost:8080/api/unread";
-        return (List<Message>) restTemplate.getForEntity(url, Message[].class);
-    }
+    
 
     public List<Message> getLast() {
         String url = "http://localhost:8080/api/last";
+
+        String json = restTemplate.getForObject(url, String.class);
+        return new Gson().fromJson(json, new TypeToken<List<Message>>(){}.getType());
+    }
+
+    public List<Message> getUnRead() {
+        String url = "http://localhost:8080/api/unread";
 
         String json = restTemplate.getForObject(url, String.class);
         return new Gson().fromJson(json, new TypeToken<List<Message>>(){}.getType());
