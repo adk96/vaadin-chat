@@ -24,11 +24,7 @@ public class RestService {
         return this.restTemplate.postForObject(url, message, Message.class);
     }
 
-    public void updateMessage(long id, Message message) {
-        String url = String.format("http://localhost:8080/api/update/%d", id);
 
-        this.restTemplate.put(url, message);
-    }
 
     public List<Message> getUnreadMessages() {
         List<Message> list = new ArrayList<>();
