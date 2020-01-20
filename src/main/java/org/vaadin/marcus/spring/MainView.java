@@ -2,6 +2,7 @@ package org.vaadin.marcus.spring;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Key;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.dependency.StyleSheet;
@@ -13,6 +14,11 @@ import com.vaadin.flow.component.page.Push;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.PWA;
+import static java.nio.file.Files.list;
+import static java.rmi.Naming.list;
+import java.util.ArrayList;
+import static java.util.Collections.list;
+import java.util.HashMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.vaadin.marcus.spring.config.MessagesInfoManager;
@@ -22,6 +28,9 @@ import org.vaadin.marcus.spring.model.MessageInfo;
 import org.vaadin.marcus.spring.service.RestService;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @StyleSheet("frontend://styles/styles.css")
 @Route
@@ -29,11 +38,18 @@ import java.util.List;
 @Push
 @StyleSheet("frontend://styles/styles.css")
 
+
+
+
 public class MainView extends VerticalLayout {
 
     private final MessagesInfoManager messagesInfoManager;
     private final RestService restService;
     private String username;
+    
+    
+  
+     private static int count=0;
 
     @Autowired
     public MainView(RestService restService) {
@@ -113,15 +129,18 @@ public class MainView extends VerticalLayout {
         textField.clear();
         textField.focus();
     }
+    
 
-    @Scheduled(fixedDelay = 1000)
-    public void loadUnReadMessage(){
-        if(messageList == null) return;
-        List<Message> messages = restService.getUnRead();
-        for(Message message : messages){
-            messagesInfoManager.updateMessageUIInfo( new MessageInfo( messageList, message, this ) );
-            message.setUnread( true );
-            restService.saveMessage( message );
-        }
-    }
+    
+ 
+
+
+@Scheduled (fixedDelay = 1000)
+public void test() {
+    count++; 
+    System.out.println("Hello"+count);
+
 }
+}
+
+ 
