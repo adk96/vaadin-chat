@@ -38,18 +38,13 @@ import java.util.stream.Collectors;
 @Push
 @StyleSheet("frontend://styles/styles.css")
 
-
-
-
 public class MainView extends VerticalLayout {
 
     private final MessagesInfoManager messagesInfoManager;
     private final RestService restService;
     private String username;
-    
-    
-  
-     private static int count=0;
+
+    private int count = 0;
 
     @Autowired
     public MainView(RestService restService) {
@@ -83,8 +78,10 @@ public class MainView extends VerticalLayout {
         add(layout);
     }
 
+    MessageList messageList;
+
     private void showChat(String username) {
-        MessageList messageList = new MessageList();
+        messageList = new MessageList();
 
         List<Message> lasts = restService.getLast();
         for (Message message : lasts) {
@@ -129,18 +126,19 @@ public class MainView extends VerticalLayout {
         textField.clear();
         textField.focus();
     }
-    
 
-    
- 
+    @Scheduled(fixedDelay = 1000)
+    public void test() {
+        count++;
+        System.out.println("Hello" + count);
 
+        this.getUI().get().access(() -> {
 
-@Scheduled (fixedDelay = 1000)
-public void test() {
-    count++; 
-    System.out.println("Hello"+count);
+            if (messageList != null) {
+                messageList.add(new Paragraph("From me" + ": " + "Hello" + count));
+            }
 
+        });
+
+    }
 }
-}
-
- 

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.vaadin.marcus.spring.model.Message;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -23,7 +24,17 @@ public class RestService {
         return this.restTemplate.postForObject(url, message, Message.class);
     }
 
-    
+    public void updateMessage(long id, Message message) {
+        String url = String.format("http://localhost:8080/api/update/%d", id);
+
+        this.restTemplate.put(url, message);
+    }
+
+    public List<Message> getUnreadMessages() {
+        List<Message> list = new ArrayList<>();
+        String url = "http://localhost:8080/api/unread";
+        return (List<Message>) restTemplate.getForEntity(url, Message[].class);
+    }
 
     public List<Message> getLast() {
         String url = "http://localhost:8080/api/last";
@@ -31,11 +42,11 @@ public class RestService {
         String json = restTemplate.getForObject(url, String.class);
         return new Gson().fromJson(json, new TypeToken<List<Message>>(){}.getType());
     }
-
-    public List<Message> getUnRead() {
-        String url = "http://localhost:8080/api/unread";
+    
+    public List<Message> getUnreadById(long id) {
+        String url = String.format("http://localhost:8080/api//api/unread/%d", id);
 
         String json = restTemplate.getForObject(url, String.class);
-        return new Gson().fromJson(json, new TypeToken<List<Message>>(){}.getType());
-    }
+        return new Gson().fromJson(json, new TypeToken<List<Message>>() {}.getType());
+}
 }

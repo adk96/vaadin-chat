@@ -9,7 +9,6 @@ import org.vaadin.marcus.spring.model.MessageInfo;
 import java.util.*;
 import java.util.stream.Collectors;
 
-
 public class MessagesInfoManager {
 
 

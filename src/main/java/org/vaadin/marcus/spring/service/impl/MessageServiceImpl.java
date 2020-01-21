@@ -4,28 +4,24 @@ import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.vaadin.marcus.spring.model.InputMessage;
 import org.vaadin.marcus.spring.model.Message;
+import org.vaadin.marcus.spring.model.MessageStatus;
 import org.vaadin.marcus.spring.repository.MessageRepository;
 import org.vaadin.marcus.spring.service.MessageService;
 
 import javax.transaction.Transactional;
-import java.util.Collections;
-import java.util.Comparator;
+import java.util.*;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Date;
 
-import java.util.List;
 import java.util.stream.Collectors;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.vaadin.marcus.spring.model.InputMessage;
-import org.vaadin.marcus.spring.model.MessageStatus;
 
 @Service
 @Transactional
-
-    
 public class MessageServiceImpl implements MessageService {
     private final MessageRepository repository;
     private final PageRequest lastRequest;
@@ -66,7 +62,15 @@ public class MessageServiceImpl implements MessageService {
         return repository.getAllfromTable();
     }
 
-  
+//    @Override
+//    public List<Message> getLast() {
+//        List<Message> result = repository.findAll(lastRequest).getContent();
+//
+//        return result.stream()
+//                .sorted(Comparator.comparingLong(Message::getId))
+//                .collect(Collectors.toList());
+//    }
+
 
 
     @Override
@@ -96,5 +100,11 @@ public class MessageServiceImpl implements MessageService {
         repository.clearBase();
     }
 
-  
+    @Override
+    public void updateMessage(long id, Message message) {
+        if (repository.findById(id).isPresent()) {
+            message.setId(id);
+            repository.save(message);
+        }
+    }
 }

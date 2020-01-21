@@ -1,15 +1,14 @@
 package org.vaadin.marcus.spring.service;
 
-import org.vaadin.marcus.spring.model.Message;
-
-import java.util.List;
+import com.google.gson.Gson;
+import org.springframework.http.ResponseEntity;
 import org.vaadin.marcus.spring.model.InputMessage;
+import org.vaadin.marcus.spring.model.Message;
 import org.vaadin.marcus.spring.model.MessageStatus;
 
-public interface MessageService {
-    
+import java.util.List;
 
-    
+public interface MessageService {
 
     List<Message> getAllMessages();
     MessageStatus add(Message message);
@@ -17,5 +16,5 @@ public interface MessageService {
     List<Message> getUnreadById(InputMessage message);
     String getUnreadMessages();
     void deleteMessages();
-    
+    void updateMessage(long id, Message message);
 }
