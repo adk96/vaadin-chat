@@ -18,7 +18,7 @@ import java.util.TimerTask;
 public class RestController {
 
     @Autowired
-    
+   
 
     @Resource
     private final MessageService messageService;
@@ -44,10 +44,9 @@ public class RestController {
 
     @GetMapping("/api/unread")
     public void getUnreadMessages() {
-        // тут мы вызываем сам таймер
-       
+        
+        
     }
-    
 
     @PostMapping("/api/unread/byid")
     public List<Message> getUnreadById(@RequestBody InputMessage message) {
@@ -57,6 +56,6 @@ public class RestController {
     @DeleteMapping("/api/delete")
     public String clearBase() {
         messageService.deleteMessages();
-        return "Все сообщения были удалены";
+        return "All messages delete";
     }
 }

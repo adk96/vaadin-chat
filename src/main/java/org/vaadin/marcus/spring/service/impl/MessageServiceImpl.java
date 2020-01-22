@@ -38,16 +38,16 @@ public class MessageServiceImpl implements MessageService {
     @Override
     public MessageStatus add(@RequestBody  Message message) {
         if(message == null) {
-            System.out.println("Пришел пустой запрос на сохранение данных");
+            System.out.println("An empty request to save data came");
 
         }
         MessageStatus status = new MessageStatus();
         try {
             repository.save(message);
-            status.setMessage("Сообщение успешно сохранено");
+            status.setMessage("Message Saved");
         }
         catch (Exception e) {
-            status.setMessage("Во время сохранения сообщения произошла ошибка");
+            status.setMessage("Message not saved");
         }
         return status;
     }

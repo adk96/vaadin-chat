@@ -42,11 +42,4 @@ public class RestService {
         String json = restTemplate.getForObject(url, String.class);
         return new Gson().fromJson(json, new TypeToken<List<Message>>(){}.getType());
     }
-    
-    public List<Message> getUnreadById(long id) {
-        String url = String.format("http://localhost:8080/api//api/unread/%d", id);
-
-        String json = restTemplate.getForObject(url, String.class);
-        return new Gson().fromJson(json, new TypeToken<List<Message>>() {}.getType());
-}
 }
