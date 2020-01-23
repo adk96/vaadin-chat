@@ -10,8 +10,8 @@ public class Message {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
   private Timestamp time;
-  private String fromV;
-  private String messageV;
+  private String from;
+  private String message;
   private boolean unread;
 
   public Timestamp getTime() {
@@ -27,8 +27,8 @@ public class Message {
   }
 
   public Message(String from, String message) {
-    this.fromV = from;
-    this.messageV = message;
+    this.from = from;
+    this.message = message;
     unread = true;
     time = new Timestamp(System.currentTimeMillis());
   }
@@ -42,19 +42,19 @@ public class Message {
   }
 
   public String getFrom() {
-    return fromV;
+    return from;
   }
 
   public void setFrom(String from) {
-    this.fromV = from;
+    this.from = from;
   }
 
   public String getMessage() {
-    return messageV;
+    return message;
   }
 
   public void setMessage(String message) {
-    this.messageV = message;
+    this.message = message;
   }
 
   public boolean isUnread() {
@@ -70,8 +70,8 @@ public class Message {
     return "Message{" +
             "id=" + id +
             ", time=" + time +
-            ", fromV='" + fromV + '\'' +
-            ", messageV='" + messageV + '\'' +
+            ", from='" + from + '\'' +
+            ", message='" + message + '\'' +
             ", unread=" + unread +
             '}';
   }

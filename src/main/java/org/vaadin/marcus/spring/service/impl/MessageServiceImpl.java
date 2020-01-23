@@ -62,14 +62,6 @@ public class MessageServiceImpl implements MessageService {
         return repository.getAllfromTable();
     }
 
-//    @Override
-//    public List<Message> getLast() {
-//        List<Message> result = repository.findAll(lastRequest).getContent();
-//
-//        return result.stream()
-//                .sorted(Comparator.comparingLong(Message::getId))
-//                .collect(Collectors.toList());
-//    }
 
 
 
@@ -80,7 +72,7 @@ public class MessageServiceImpl implements MessageService {
 
 
 
-    // Тут реализация метода, который проверяет каждое сообщение с ранее выдаными на уникальность
+    
 
     @Override
     public String getUnreadMessages() {
