@@ -131,10 +131,9 @@ public class MainView extends VerticalLayout {
         for (LinkedHashMap message : lasts) {
             messageList.add(new Paragraph(message.get("fromv") + ": " + message.get("messagev")));
         }
-        messageLast.setMessageV("xDD");
-        messageLast.setFromV("rrrrrrr");
+        
         messagesInfoManager.updateMessageUIInfo(new MessageInfo(messageList, messageLast, this));
-        System.out.println("test");
+        
     }
     
 }
