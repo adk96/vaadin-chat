@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.vaadin.marcus.spring.model.Message;
 
-import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 @Service
@@ -30,10 +30,9 @@ public class RestService {
         this.restTemplate.put(url, message);
     }
 
-    public List<Message> getUnreadMessages() {
-        List<Message> list = new ArrayList<>();
+    public List<LinkedHashMap> getUnreadMessages(Message message) {
         String url = "http://localhost:8080/api/unread/byid";
-        return (List<Message>) restTemplate.getForEntity(url, Message[].class);
+        return (List<LinkedHashMap>) this.restTemplate.postForObject(url, message, List.class);
     }
 
     public List<Message> getLast() {

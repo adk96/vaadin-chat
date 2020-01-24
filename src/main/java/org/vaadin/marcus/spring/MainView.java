@@ -2,6 +2,7 @@ package org.vaadin.marcus.spring;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Key;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.dependency.StyleSheet;
@@ -20,6 +21,7 @@ import org.vaadin.marcus.spring.model.Message;
 import org.vaadin.marcus.spring.model.MessageInfo;
 import org.vaadin.marcus.spring.service.RestService;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import org.springframework.scheduling.annotation.Scheduled;
 
@@ -31,6 +33,8 @@ public class MainView extends VerticalLayout {
     private final MessagesInfoManager messagesInfoManager;
     private final RestService restService;
     private String username;
+    private TextField textField;
+    private Message messageLast;
     
 
     @Autowired
@@ -70,8 +74,10 @@ public class MainView extends VerticalLayout {
 
         List<Message> lasts = restService.getLast();
         for (Message message : lasts) {
-            messageList.add(new Paragraph(message.getFrom() + ": " + message.getMessage()));
+            messageList.add(new Paragraph(message.getFromV() + ": " + message.getMessageV()));
         }
+
+        messageLast = lasts.get(lasts.size() - 1);
 
         add(messageList, createInputLayout(username, messageList));
         expand(messageList);
@@ -91,7 +97,7 @@ public class MainView extends VerticalLayout {
         
         messageField.addFocusListener(event -> {
             for (Message message : messagesInfoManager.getMessagesByUI(getUI())) {
-                if (!message.getFrom().equals(username)) {
+                if (!message.getFromV().equals(username)) {
                     message.setUnread(false);
                     this.restService.updateMessage(message.getId(), message);
                 }
@@ -107,9 +113,28 @@ public class MainView extends VerticalLayout {
     private void sender(TextField textField, MessageList messageList) {
         Message message = new Message(username, textField.getValue());
         message = restService.saveMessage(message);
-        messagesInfoManager.updateMessageUIInfo(new MessageInfo(messageList, message, this));
+        messageLast = message;
+        this.textField = textField;
+     //   messagesInfoManager.updateMessageUIInfo(new MessageInfo(messageList, message, this));
         textField.clear();
         textField.focus();
+
+    }
+
+    @Scheduled(fixedDelay = 1000)
+    public void scheduleFixedDelayTask() {
+
+        MessageList messageList = new MessageList();
+
+        List<LinkedHashMap> lasts = restService.getUnreadMessages(messageLast);
+
+        for (LinkedHashMap message : lasts) {
+            messageList.add(new Paragraph(message.get("fromv") + ": " + message.get("messagev")));
+        }
+        messageLast.setMessageV("xDD");
+        messageLast.setFromV("rrrrrrr");
+        messagesInfoManager.updateMessageUIInfo(new MessageInfo(messageList, messageLast, this));
+        System.out.println("test");
     }
     
 }

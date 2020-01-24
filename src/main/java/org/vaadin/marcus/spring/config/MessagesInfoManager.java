@@ -27,7 +27,7 @@ public class MessagesInfoManager {
             uiOptional.ifPresent(ui ->
                     
                     ui.access(() ->
-                            messageList.add(new Paragraph(message.getFrom() + ": " + message.getMessage()))
+                            messageList.add(new Paragraph(message.getFromV() + ": " + message.getMessageV()))
                     ));
         }
     }

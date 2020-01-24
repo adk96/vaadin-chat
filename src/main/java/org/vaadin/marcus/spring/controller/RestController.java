@@ -49,8 +49,9 @@ public class RestController {
     }
 
     @PostMapping("/api/unread/byid")
-    public List<Message> getUnreadById(@RequestBody InputMessage message) {
-        return messageService.getUnreadById(message);
+    public List<Message> getUnreadById(@RequestBody Message message) {
+        List<Message> list = messageService.getUnreadById(message);
+        return list;
     }
 
     @DeleteMapping("/api/delete")
