@@ -11,9 +11,9 @@ public class Message {
   private long id;
   private Timestamp time;
 
-  @Column(name = "fromv")
+  @Column(name = "fromV")
   private String fromv;
-  @Column(name = "messagev")
+  @Column(name = "messageV")
   private String messagev;
   private boolean unread;
 
