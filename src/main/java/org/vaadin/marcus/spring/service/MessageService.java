@@ -13,7 +13,7 @@ public interface MessageService {
     List<Message> getAllMessages();
     MessageStatus add(Message message);
     List<Message> getLast();
-    List<Message> getUnreadById(Message message);
+    List<Message> getUnreadById(long messageId);
     String getUnreadMessages();
     void deleteMessages();
     void updateMessage(long id, Message message);

@@ -30,8 +30,8 @@ public class RestService {
         this.restTemplate.put(url, message);
     }
 
-    public List<LinkedHashMap> getUnreadMessages(Message message) {
-        String url = "http://localhost:8080/api/unread";
+    public List<LinkedHashMap> getUnreadMessages(long message) {
+        String url = "http://localhost:8080/api/unread/byid";
         return (List<LinkedHashMap>) this.restTemplate.postForObject(url, message, List.class);
     }
 

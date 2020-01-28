@@ -121,17 +121,17 @@ public class MainView extends VerticalLayout {
 
     }
 
-    @Scheduled(fixedDelay = 1000)
+    @Scheduled(fixedDelay = 5000)
     public void scheduleFixedDelayTask() {
 
         MessageList messageList = new MessageList();
 
-        List<LinkedHashMap> lasts = restService.getUnreadMessages(messageLast);
+        List<LinkedHashMap> lasts = restService.getUnreadMessages(messageLast.getId());
 
         for (LinkedHashMap message : lasts) {
-            messageList.add(new Paragraph(message.get("fromV") + ": " + message.get("messageV")));
+            messageList.add(new Paragraph(message.get("fromv") + ": " + message.get("messagev")));
         }
-        
+       
         messagesInfoManager.updateMessageUIInfo(new MessageInfo(messageList, messageLast, this));
         
     }

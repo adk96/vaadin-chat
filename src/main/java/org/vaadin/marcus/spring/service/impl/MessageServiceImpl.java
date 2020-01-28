@@ -66,14 +66,12 @@ public class MessageServiceImpl implements MessageService {
 
 
     @Override
-    public List<Message> getUnreadById(Message message) {
-        List list = repository.getUnreadById(message.getId());
+    public List<Message> getUnreadById(long messageId) {
+        List list = repository.getUnreadById(messageId);
         return list;
     }
 
 
-
-    
 
     @Override
     public String getUnreadMessages() {

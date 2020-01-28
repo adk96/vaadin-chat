@@ -49,7 +49,7 @@ public class RestController {
     }
 
     @PostMapping("/api/unread/byid")
-    public List<Message> getUnreadById(@RequestBody Message message) {
+    public List<Message> getUnreadById(@RequestBody long message) {
         List<Message> list = messageService.getUnreadById(message);
         return list;
     }
