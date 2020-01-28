@@ -129,7 +129,7 @@ public class MainView extends VerticalLayout {
         List<LinkedHashMap> lasts = restService.getUnreadMessages(messageLast.getId());
 
         for (LinkedHashMap message : lasts) {
-            messageList.add(new Paragraph(message.get("fromv") + ": " + message.get("messagev")));
+            messageList.add(new Paragraph(message.get("fromV") + ": " + message.get("messageV")));
         }
        
         messagesInfoManager.updateMessageUIInfo(new MessageInfo(messageList, messageLast, this));

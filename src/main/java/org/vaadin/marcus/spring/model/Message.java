@@ -11,10 +11,10 @@ public class Message {
   private long id;
   private Timestamp time;
 
-  @Column(name = "fromv")
-  private String fromv;
-  @Column(name = "messagev")
-  private String messagev;
+  @Column(name = "fromV")
+  private String fromV;
+  @Column(name = "messageV")
+  private String messageV;
   private boolean unread;
 
   public Timestamp getTime() {
@@ -30,8 +30,8 @@ public class Message {
   }
 
   public Message(String from, String message) {
-    this.fromv = from;
-    this.messagev = message;
+    this.fromV = from;
+    this.messageV = message;
     unread = true;
     time = new Timestamp(System.currentTimeMillis());
   }
@@ -45,19 +45,19 @@ public class Message {
   }
 
   public String getFromV() {
-    return fromv;
+    return fromV;
   }
 
   public void setFromV(String fromV) {
-    this.fromv = fromV;
+    this.fromV = fromV;
   }
 
   public String getMessageV() {
-    return messagev;
+    return messageV;
   }
 
   public void setMessageV(String messageV) {
-    this.messagev = messageV;
+    this.messageV = messageV;
   }
 
   public boolean isUnread() {
@@ -73,8 +73,8 @@ public class Message {
     return "Message{" +
             "id=" + id +
             ", time=" + time +
-            ", fromv='" + fromv + '\'' +
-            ", messagev='" + messagev + '\'' +
+            ", fromV='" + fromV + '\'' +
+            ", messageV='" + messageV + '\'' +
             ", unread=" + unread +
             '}';
   }
