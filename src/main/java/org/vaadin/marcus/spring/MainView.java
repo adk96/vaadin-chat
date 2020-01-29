@@ -115,7 +115,7 @@ public class MainView extends VerticalLayout {
         message = restService.saveMessage(message);
         messageLast = message;
         this.textField = textField;
-     //   messagesInfoManager.updateMessageUIInfo(new MessageInfo(messageList, message, this));
+        messagesInfoManager.updateMessageUIInfo(new MessageInfo(messageList, message, this));
         textField.clear();
         textField.focus();
 
@@ -132,7 +132,7 @@ public class MainView extends VerticalLayout {
             messageList.add(new Paragraph(message.get("fromV") + ": " + message.get("messageV")));
         }
        
-        messagesInfoManager.updateMessageUIInfo(new MessageInfo(messageList, messageLast, this));
+       
         
     }
     
