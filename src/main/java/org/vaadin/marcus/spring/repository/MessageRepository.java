@@ -19,7 +19,8 @@ public interface MessageRepository extends JpaRepository<Message, Long> {
     @Query(value = "SELECT * FROM chatMessages WHERE id > :id", nativeQuery = true)
     List<Message> getUnreadById(@Param("id") long id);
 
-    @Query(value = "SELECT * FROM chatmessages ORDER BY time DESC LIMIT 10;", nativeQuery = true)
+    @Query(value = "value = "SELECT t.* FROM ( SELECT * FROM chatmessages ORDER BY id DESC LIMIT 10 t ORDER BY id", nativeQuery=true )
+List<Message> getLastMessages();", nativeQuery = true)
     List<Message> getLastMessages();
 
     @Query(value = "DELETE * FROM chatMessages", nativeQuery = true)
