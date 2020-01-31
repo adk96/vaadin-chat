@@ -34,7 +34,9 @@ public class MainView extends VerticalLayout {
     private final RestService restService;
     private String username;
     private TextField textField;
-    private Message messageLast;
+    private static Message messageLast;
+    private Message messageForSheduler;
+    
     
 
     @Autowired
@@ -119,20 +121,32 @@ public class MainView extends VerticalLayout {
         textField.clear();
         textField.focus();
     }
+    
+  public long getIdLastMessage (Message messageForSheduler) {
+if(messageForSheduler == null) {
+List<Message> lastMessages = restService.getLast();
+return lastMessages.get(lastMessages.size()).getId();
+}
+else {
+return messageLast.getId();
+}
+}
 
-    @Scheduled(fixedDelay = 5000)
+    @Scheduled(fixedDelay = 1000)
     public void scheduleFixedDelayTask() {
 
         MessageList messageList = new MessageList();
 
-        List<LinkedHashMap> lasts = restService.getUnreadMessages(messageLast.getId());
+       List<LinkedHashMap> lasts = restService.getUnreadMessages(getIdLastMessage(this.messageForSheduler));
 
         for (LinkedHashMap message : lasts) {
-            messageList.add(new Paragraph(message.get("fromV") + ": " + message.get("messageV")));
-        }
-       
-       
+        messageList.add(new Paragraph(message.get("fromv") + ": " + message.get("messagev")));
+}
+
+        messagesInfoManager.updateMessageUIInfo(new MessageInfo(messageList, messageLast, this));
         
+        
+}
     }
     
-}
+
