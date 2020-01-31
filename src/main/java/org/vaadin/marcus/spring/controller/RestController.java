@@ -17,8 +17,6 @@ import java.util.TimerTask;
 @org.springframework.web.bind.annotation.RestController
 public class RestController {
 
-    @Autowired
-   
 
     @Resource
     private final MessageService messageService;
@@ -58,5 +56,10 @@ public class RestController {
     public String clearBase() {
         messageService.deleteMessages();
         return "All messages delete";
+    }
+
+    @GetMapping("/get/test")
+    public List<Message> getTest() {
+        return messageService.getLast();
     }
 }

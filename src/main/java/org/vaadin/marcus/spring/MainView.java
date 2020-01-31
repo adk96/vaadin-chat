@@ -112,13 +112,12 @@ public class MainView extends VerticalLayout {
 
     private void sender(TextField textField, MessageList messageList) {
         Message message = new Message(username, textField.getValue());
-        message = restService.saveMessage(message);
+        restService.saveMessage(message);
         messageLast = message;
         this.textField = textField;
         messagesInfoManager.updateMessageUIInfo(new MessageInfo(messageList, message, this));
         textField.clear();
         textField.focus();
-
     }
 
     @Scheduled(fixedDelay = 5000)
