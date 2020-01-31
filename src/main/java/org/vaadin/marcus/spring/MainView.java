@@ -122,6 +122,9 @@ public class MainView extends VerticalLayout {
         textField.focus();
     }
     
+    
+  //он берет последнее сообщение которое определяется в других методах. 
+    //Если на вход приходит пустой обьект он заново делает запрос в бд и забирает айди последнего сообщения  
   public long getIdLastMessage (Message messageForSheduler) {
 if(messageForSheduler == null) {
 List<Message> lastMessages = restService.getLast();
@@ -143,7 +146,7 @@ return messageLast.getId();
         messageList.add(new Paragraph(message.get("fromv") + ": " + message.get("messagev")));
 }
 
-        messagesInfoManager.updateMessageUIInfo(new MessageInfo(messageList, messageLast, this));
+        
         
         
 }
