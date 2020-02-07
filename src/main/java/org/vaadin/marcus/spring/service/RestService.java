@@ -30,7 +30,9 @@ public class RestService {
 
     public List<Message> getUnreadMessages(long message) {
         String url = "http://localhost:8080/api/unread/byid";
-        return (List<Message>) this.restTemplate.postForObject(url, message, List.class);
+        //return (List<Message>) this.restTemplate.postForObject(url, message, List.class);
+        String json = restTemplate.postForObject(url, message, String.class);
+        return new Gson().fromJson(json, new TypeToken<List<Message>>(){}.getType());
     }
 
     public List<Message> getLast() {

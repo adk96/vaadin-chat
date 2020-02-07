@@ -21,6 +21,7 @@ import org.vaadin.marcus.spring.service.RestService;
 
 import java.util.List;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.vaadin.marcus.spring.model.MessageInfo;
 
 @StyleSheet("frontend://styles/styles.css")
 @Route
@@ -122,16 +123,20 @@ public class MainView extends VerticalLayout {
     public void scheduleFixedDelayTask() {
 
         if (messageLast != null) {
+            this.getUI().get().access(()
+                    -> {
 
-            List<Message> lasts = restService.getUnreadMessages(messageLast.getId());
+                List<Message> lasts = restService.getUnreadMessages(messageLast.getId());
 
-            for (Message message : lasts) {
-                messageList.add(new Paragraph(message.getFromV() + ": " + message.getMessageV()));
-            }
+                for (Message message : lasts) {
+                    messageList.add(new Paragraph(message.getFromV() + ": " + message.getMessageV()));
+                }
 
-            if(!lasts.isEmpty()){
-                messageLast = lasts.get(lasts.size() - 1);
-            }
+                if (!lasts.isEmpty()) {
+                    messageLast = lasts.get(lasts.size() - 1);
+                }
+
+            });
         }
 
     }
