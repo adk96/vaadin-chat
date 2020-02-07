@@ -2,7 +2,6 @@ package org.vaadin.marcus.spring;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Key;
-import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.dependency.StyleSheet;
@@ -18,10 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.vaadin.marcus.spring.config.MessagesInfoManager;
 import org.vaadin.marcus.spring.config.MessageConfigurator;
 import org.vaadin.marcus.spring.model.Message;
-import org.vaadin.marcus.spring.model.MessageInfo;
 import org.vaadin.marcus.spring.service.RestService;
 
-import java.util.LinkedHashMap;
 import java.util.List;
 import org.springframework.scheduling.annotation.Scheduled;
 
@@ -30,14 +27,14 @@ import org.springframework.scheduling.annotation.Scheduled;
 @PWA(name = "Vaadin MessagesInfoManager", shortName = "Vaadin MessagesInfoManager")
 @Push
 public class MainView extends VerticalLayout {
+
     private final MessagesInfoManager messagesInfoManager;
     private final RestService restService;
     private String username;
     private TextField textField;
-    private static Message messageLast;
-    private Message messageForSheduler;
-    
-    
+    private Message messageLast;
+
+    MessageList messageList = new MessageList();
 
     @Autowired
     public MainView(RestService restService) {
@@ -70,9 +67,8 @@ public class MainView extends VerticalLayout {
 
         add(layout);
     }
-    
+
     private void showChat(String username) {
-        MessageList messageList = new MessageList();
 
         List<Message> lasts = restService.getLast();
         for (Message message : lasts) {
@@ -96,7 +92,7 @@ public class MainView extends VerticalLayout {
 
         layout.add(messageField, sendButton);
         layout.expand(messageField);
-        
+
         messageField.addFocusListener(event -> {
             for (Message message : messagesInfoManager.getMessagesByUI(getUI())) {
                 if (!message.getFromV().equals(username)) {
@@ -115,41 +111,29 @@ public class MainView extends VerticalLayout {
     private void sender(TextField textField, MessageList messageList) {
         Message message = new Message(username, textField.getValue());
         restService.saveMessage(message);
-        messageLast = message;
-        this.textField = textField;
-        messagesInfoManager.updateMessageUIInfo(new MessageInfo(messageList, message, this));
+        //messageLast = message;
+        //this.textField = textField;
+        //messagesInfoManager.updateMessageUIInfo(new MessageInfo(messageList, message, this));
         textField.clear();
         textField.focus();
     }
-    
-    
-  //он берет последнее сообщение которое определяется в других методах. 
-    //Если на вход приходит пустой обьект он заново делает запрос в бд и забирает айди последнего сообщения  
-  public long getIdLastMessage (Message messageForSheduler) {
-if(messageForSheduler == null) {
-List<Message> lastMessages = restService.getLast();
-return lastMessages.get(lastMessages.size()).getId();
-}
-else {
-return messageLast.getId();
-}
-}
 
-    @Scheduled(fixedDelay = 1000)
+    @Scheduled(fixedDelay = 5000)
     public void scheduleFixedDelayTask() {
 
-        MessageList messageList = new MessageList();
+        if (messageLast != null) {
 
-       List<LinkedHashMap> lasts = restService.getUnreadMessages(getIdLastMessage(this.messageForSheduler));
+            List<Message> lasts = restService.getUnreadMessages(messageLast.getId());
 
-        for (LinkedHashMap message : lasts) {
-        messageList.add(new Paragraph(message.get("fromv") + ": " + message.get("messagev")));
-}
+            for (Message message : lasts) {
+                messageList.add(new Paragraph(message.getFromV() + ": " + message.getMessageV()));
+            }
 
-        
-        
-        
-}
+            if(!lasts.isEmpty()){
+                messageLast = lasts.get(lasts.size() - 1);
+            }
+        }
+
     }
-    
 
+}
